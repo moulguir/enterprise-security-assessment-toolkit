@@ -12,6 +12,7 @@ from sec_assess.reporting.markdown_report import save_markdown_report
 from sec_assess.utils.url_utils import normalize_url
 from sec_assess.reporting.csv_report import save_csv_report
 from sec_assess.modules.host_exposure.host_scanner import HostExposureScanner
+from sec_assess.modules.logguard.log_scanner import LogGuardScanner
 
 
 console = Console()
@@ -30,7 +31,8 @@ app = typer.Typer(
 
 scan_app = typer.Typer(help="Run security scans.")
 app.add_typer(scan_app, name="scan")
-
+analyze_app = typer.Typer(help="Analyze security data sources.")
+app.add_typer(analyze_app, name="analyze")
 
 def handle_report_output(
     target: str,
@@ -202,6 +204,54 @@ def run_from_config(
     console.print(f"[red]Unsupported scan type:[/red] {app_config.scan.type}")
     raise typer.Exit(code=1)
 
+@analyze_app.command("logs")
+def analyze_logs(
+    file: str = typer.Option(..., "--file", "-f", help="Path to log file."),
+    log_type: str = typer.Option(
+        "linux-auth",
+        "--type",
+        help="Log type to analyze. Currently supported: linux-auth.",
+    ),
+    threshold: int = typer.Option(
+        5,
+        "--threshold",
+        help="Minimum failed attempts from one IP to generate brute-force finding.",
+    ),
+    output_format: OutputFormat = typer.Option(
+        OutputFormat.console,
+        "--format",
+        help="Output format: console, markdown, json or csv.",
+    ),
+    output_dir: str = typer.Option(
+        "reports",
+        "--output-dir",
+        help="Directory where reports are saved.",
+    ),
+):
+    """
+    Analyze security logs and generate defensive findings.
+    """
+    if log_type != "linux-auth":
+        console.print(f"[red]Unsupported log type:[/red] {log_type}")
+        raise typer.Exit(code=1)
 
+    try:
+        scanner = LogGuardScanner()
+        findings = scanner.scan_auth_log(
+            file_path=file,
+            threshold=threshold,
+        )
+
+    except FileNotFoundError as error:
+        console.print(f"[red]Log file error:[/red] {error}")
+        raise typer.Exit(code=1)
+
+    handle_report_output(
+        target=file,
+        findings=findings,
+        output_format=output_format.value,
+        output_dir=output_dir,
+    )
+    
 if __name__ == "__main__":
     app()
