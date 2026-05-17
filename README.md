@@ -341,8 +341,8 @@ The toolkit supports YAML-based assessment configuration.
 Example file:
 
 target:
-  name: egela-ehu
-  url: https://egela.ehu.eus
+  name: example
+  url: https://example.com
 
 scan:
   type: web
@@ -516,7 +516,7 @@ enterprise-security-assessment-toolkit/
 └── LICENSE
 Examples
 Web assessment
-python -m sec_assess.cli scan web --url https://egela.ehu.eus --format markdown
+python -m sec_assess.cli scan web --url https://example.com --format markdown
 Host exposure assessment
 python -m sec_assess.cli scan host --target 127.0.0.1 --ports 80,443,445,3389
 SSH log analysis
@@ -623,6 +623,10 @@ python -m pytest
 Author
 
 Mohamed Oulghirah
+
+## Keywords
+
+enterprise-security-assessment-toolkit, Enterprise Security Assessment Toolkit, defensive cybersecurity CLI, security assessment toolkit, blue team tool, SOC triage tool, host exposure scanner, SSH log analyzer, MITRE ATT&CK mapping, OWASP ASVS mapping, NIST CSF security assessment, Python cybersecurity tool.
 
 License
 
