@@ -1,0 +1,14 @@
+target:
+  name: example-http
+  url: http://example.com
+
+scan:
+  type: web
+  timeout: 10
+
+report:
+  format: console
+  output_dir: reports
+
+risk:
+  fail_on_high: false
