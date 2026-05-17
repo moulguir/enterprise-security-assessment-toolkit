@@ -1,0 +1,8 @@
+typer[all]==0.12.5
+rich==13.9.4
+requests==2.32.3
+cryptography==43.0.3
+pydantic==2.9.2
+PyYAML==6.0.2
+SQLAlchemy==2.0.36
+pytest==8.3.3

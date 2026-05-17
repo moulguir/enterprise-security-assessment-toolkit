@@ -1,0 +1,16 @@
+[project]
+name = "enterprise-security-assessment-toolkit"
+version = "0.1.0"
+description = "A modular CLI toolkit for defensive security assessment, web security checks, risk scoring and professional reporting."
+authors = [
+    { name = "Mohamed Oulghirah" }
+]
+readme = "README.md"
+requires-python = ">=3.11"
+
+[project.scripts]
+sec-assess = "sec_assess.cli:app"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
