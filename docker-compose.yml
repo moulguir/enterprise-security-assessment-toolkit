@@ -1,0 +1,10 @@
+services:
+  sec-assess:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: enterprise-security-assessment-toolkit
+    volumes:
+      - ./reports:/app/reports
+      - ./examples:/app/examples:ro
+    working_dir: /app

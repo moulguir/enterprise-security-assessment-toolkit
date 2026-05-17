@@ -623,3 +623,7 @@ python -m pytest
 Author
 
 Mohamed Oulghirah
+
+License
+
+This project is released under the MIT License.
