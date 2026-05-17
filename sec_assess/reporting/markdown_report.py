@@ -6,11 +6,38 @@ from sec_assess.core.risk_engine import RiskEngine
 from sec_assess.utils.url_utils import safe_filename_from_url
 
 
+SEVERITY_ORDER = {
+    "CRITICAL": 0,
+    "HIGH": 1,
+    "MEDIUM": 2,
+    "LOW": 3,
+    "INFO": 4,
+}
+
+
+def sort_findings_by_severity(findings: list[Finding]) -> list[Finding]:
+    return sorted(
+        findings,
+        key=lambda finding: SEVERITY_ORDER.get(finding.severity.value, 99),
+    )
+
+
+def get_priority_findings(findings: list[Finding]) -> list[Finding]:
+    return [
+        finding
+        for finding in sort_findings_by_severity(findings)
+        if finding.severity.value in ["CRITICAL", "HIGH", "MEDIUM"]
+    ]
+
+
 def generate_markdown_report(target: str, findings: list[Finding]) -> str:
     risk_engine = RiskEngine()
     score = risk_engine.calculate_score(findings)
-    risk_level = risk_engine.classify_risk(score)
+    risk_level = risk_engine.classify_risk(score, findings)
     counts = risk_engine.count_by_severity(findings)
+
+    sorted_findings = sort_findings_by_severity(findings)
+    priority_findings = get_priority_findings(findings)
 
     now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
@@ -23,6 +50,7 @@ def generate_markdown_report(target: str, findings: list[Finding]) -> str:
         f"- **Scan date:** {now}",
         f"- **Risk score:** {score}/100",
         f"- **Overall risk:** {risk_level}",
+        f"- **Total findings:** {len(findings)}",
         "",
         "## Findings by Severity",
         "",
@@ -36,15 +64,41 @@ def generate_markdown_report(target: str, findings: list[Finding]) -> str:
     lines.extend(
         [
             "",
+            "## Priority Findings",
+            "",
+        ]
+    )
+
+    if not priority_findings:
+        lines.append("No priority findings were detected.")
+        lines.append("")
+    else:
+        lines.extend(
+            [
+                "| Severity | ID | Title | Recommendation |",
+                "|---|---|---|---|",
+            ]
+        )
+
+        for finding in priority_findings:
+            recommendation = finding.recommendation.replace("\n", " ")
+            lines.append(
+                f"| {finding.severity.value} | {finding.id} | {finding.title} | {recommendation} |"
+            )
+
+        lines.append("")
+
+    lines.extend(
+        [
             "## Technical Findings",
             "",
         ]
     )
 
-    if not findings:
+    if not sorted_findings:
         lines.append("No findings were detected.")
     else:
-        for finding in findings:
+        for finding in sorted_findings:
             lines.extend(
                 [
                     f"### {finding.id} - {finding.title}",
@@ -53,6 +107,8 @@ def generate_markdown_report(target: str, findings: list[Finding]) -> str:
                     f"- **Category:** {finding.category}",
                     f"- **Target:** `{finding.target}`",
                     f"- **Framework:** {finding.framework or 'N/A'}",
+                    f"- **MITRE tactic:** {finding.mitre_tactic or 'N/A'}",
+                    f"- **MITRE technique:** {finding.mitre_technique or 'N/A'}",
                     "",
                     "**Description**",
                     "",

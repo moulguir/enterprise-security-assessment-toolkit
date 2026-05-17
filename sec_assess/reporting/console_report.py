@@ -12,7 +12,7 @@ console = Console()
 def print_scan_report(target: str, findings: list[Finding]) -> None:
     risk_engine = RiskEngine()
     score = risk_engine.calculate_score(findings)
-    risk_level = risk_engine.classify_risk(score)
+    risk_level = risk_engine.classify_risk(score, findings)
     counts = risk_engine.count_by_severity(findings)
 
     console.print(

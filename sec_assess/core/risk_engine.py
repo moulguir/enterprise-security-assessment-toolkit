@@ -17,7 +17,25 @@ class RiskEngine:
         score = max(0, 100 - total_penalty)
         return score
 
-    def classify_risk(self, score: int) -> str:
+    def classify_risk(self, score: int, findings: list[Finding] | None = None) -> str:
+        """
+        Classifies overall risk using both numerical score and maximum finding severity.
+
+        This avoids situations where a target has a HIGH finding but the global
+        risk is still displayed as LOW because the numeric score remains high.
+        """
+        if findings:
+            severities = {finding.severity for finding in findings}
+
+            if Severity.CRITICAL in severities:
+                return "CRITICAL"
+
+            if Severity.HIGH in severities:
+                return "HIGH"
+
+            if Severity.MEDIUM in severities:
+                return "MEDIUM"
+
         if score >= 85:
             return "LOW"
         if score >= 65:

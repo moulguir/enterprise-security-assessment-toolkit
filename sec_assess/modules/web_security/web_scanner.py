@@ -4,6 +4,7 @@ from sec_assess.core.finding import Finding
 from sec_assess.core.severity import Severity
 from sec_assess.modules.web_security.cookies import analyze_cookies
 from sec_assess.modules.web_security.headers import analyze_security_headers
+from sec_assess.modules.web_security.tls import analyze_tls_certificate
 from sec_assess.utils.url_utils import is_https, normalize_url
 
 
@@ -29,6 +30,13 @@ class WebSecurityScanner:
                     framework="OWASP ASVS",
                 )
             )
+
+        findings.extend(
+            analyze_tls_certificate(
+                url=target,
+                timeout=self.timeout,
+            )
+        )
 
         try:
             response = requests.get(

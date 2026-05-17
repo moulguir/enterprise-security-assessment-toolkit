@@ -10,6 +10,7 @@ class ReportFormat(str, Enum):
     console = "console"
     markdown = "markdown"
     json = "json"
+    csv = "csv"
 
 
 class TargetConfig(BaseModel):

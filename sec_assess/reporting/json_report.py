@@ -10,7 +10,7 @@ from sec_assess.utils.url_utils import safe_filename_from_url
 def generate_json_report(target: str, findings: list[Finding]) -> dict:
     risk_engine = RiskEngine()
     score = risk_engine.calculate_score(findings)
-    risk_level = risk_engine.classify_risk(score)
+    risk_level = risk_engine.classify_risk(score, findings)
     counts = risk_engine.count_by_severity(findings)
 
     return {

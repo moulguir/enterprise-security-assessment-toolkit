@@ -69,6 +69,38 @@ def test_classify_critical_risk():
     assert engine.classify_risk(20) == "CRITICAL"
 
 
+def test_classify_risk_with_high_finding_returns_high():
+    engine = RiskEngine()
+    findings = [make_finding(Severity.HIGH)]
+
+    score = engine.calculate_score(findings)
+    risk = engine.classify_risk(score, findings)
+
+    assert score == 85
+    assert risk == "HIGH"
+
+
+def test_classify_risk_with_critical_finding_returns_critical():
+    engine = RiskEngine()
+    findings = [make_finding(Severity.CRITICAL)]
+
+    score = engine.calculate_score(findings)
+    risk = engine.classify_risk(score, findings)
+
+    assert score == 75
+    assert risk == "CRITICAL"
+
+
+def test_classify_risk_with_medium_finding_returns_medium():
+    engine = RiskEngine()
+    findings = [make_finding(Severity.MEDIUM)]
+
+    score = engine.calculate_score(findings)
+    risk = engine.classify_risk(score, findings)
+
+    assert score == 92
+    assert risk == "MEDIUM"
+    
 def test_count_by_severity():
     engine = RiskEngine()
     findings = [
@@ -85,3 +117,5 @@ def test_count_by_severity():
     assert counts["MEDIUM"] == 0
     assert counts["HIGH"] == 1
     assert counts["CRITICAL"] == 0
+    
+    
