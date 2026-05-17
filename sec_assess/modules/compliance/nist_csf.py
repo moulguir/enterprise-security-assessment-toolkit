@@ -1,0 +1,98 @@
+NIST_CSF_MAPPING = {
+    "WEB-HTTPS-001": {
+        "framework": "NIST CSF",
+        "function": "Protect",
+        "category": "Data Security",
+        "description": "Protect data in transit using secure transport mechanisms.",
+    },
+    "WEB-TLS-001": {
+        "framework": "NIST CSF",
+        "function": "Protect",
+        "category": "Platform Security",
+        "description": "Validate secure platform communication using trusted certificates.",
+    },
+    "WEB-TLS-002": {
+        "framework": "NIST CSF",
+        "function": "Govern",
+        "category": "Risk Management",
+        "description": "Monitor certificate lifecycle risks before they affect availability.",
+    },
+    "WEB-TLS-003": {
+        "framework": "NIST CSF",
+        "function": "Protect",
+        "category": "Platform Security",
+        "description": "Avoid expired certificates in production services.",
+    },
+    "WEB-HEADER-001": {
+        "framework": "NIST CSF",
+        "function": "Protect",
+        "category": "Data Security",
+        "description": "Enforce HTTPS and reduce downgrade risks.",
+    },
+    "WEB-HEADER-002": {
+        "framework": "NIST CSF",
+        "function": "Protect",
+        "category": "Platform Security",
+        "description": "Reduce browser-side injection risks using security headers.",
+    },
+    "WEB-COOKIE-001": {
+        "framework": "NIST CSF",
+        "function": "Protect",
+        "category": "Identity Management, Authentication and Access Control",
+        "description": "Protect session material from client-side script access.",
+    },
+    "WEB-COOKIE-002": {
+        "framework": "NIST CSF",
+        "function": "Protect",
+        "category": "Data Security",
+        "description": "Protect cookies from being transmitted over clear-text channels.",
+    },
+    "HOST-PORT-21": {
+        "framework": "NIST CSF",
+        "function": "Identify",
+        "category": "Asset Management",
+        "description": "Identify exposed network services and reduce unnecessary exposure.",
+    },
+    "HOST-PORT-22": {
+        "framework": "NIST CSF",
+        "function": "Identify",
+        "category": "Asset Management",
+        "description": "Identify exposed administrative services.",
+    },
+    "HOST-PORT-23": {
+        "framework": "NIST CSF",
+        "function": "Protect",
+        "category": "Platform Security",
+        "description": "Remove insecure clear-text administrative protocols.",
+    },
+    "HOST-PORT-445": {
+        "framework": "NIST CSF",
+        "function": "Protect",
+        "category": "Platform Security",
+        "description": "Restrict lateral movement exposed services such as SMB.",
+    },
+    "HOST-PORT-3389": {
+        "framework": "NIST CSF",
+        "function": "Protect",
+        "category": "Identity Management, Authentication and Access Control",
+        "description": "Restrict remote administrative access.",
+    },
+    "LOG-SSH-001": {
+        "framework": "NIST CSF",
+        "function": "Detect",
+        "category": "Adverse Event Analysis",
+        "description": "Detect authentication anomalies and brute-force patterns.",
+    },
+    "LOG-SSH-002": {
+        "framework": "NIST CSF",
+        "function": "Detect",
+        "category": "Adverse Event Analysis",
+        "description": "Detect invalid user activity and possible enumeration.",
+    },
+    "LOG-SSH-003": {
+        "framework": "NIST CSF",
+        "function": "Detect",
+        "category": "Adverse Event Analysis",
+        "description": "Detect privileged account targeting.",
+    },
+}

@@ -1,0 +1,80 @@
+OWASP_ASVS_MAPPING = {
+    "WEB-HTTPS-001": {
+        "framework": "OWASP ASVS",
+        "version": "5.0.0",
+        "control_area": "Transport Layer Security",
+        "control": "HTTPS must be enforced for sensitive applications.",
+    },
+    "WEB-TLS-001": {
+        "framework": "OWASP ASVS",
+        "version": "5.0.0",
+        "control_area": "Transport Layer Security",
+        "control": "TLS certificates must be valid and trusted.",
+    },
+    "WEB-TLS-002": {
+        "framework": "OWASP ASVS",
+        "version": "5.0.0",
+        "control_area": "Transport Layer Security",
+        "control": "TLS certificates should be monitored before expiration.",
+    },
+    "WEB-TLS-003": {
+        "framework": "OWASP ASVS",
+        "version": "5.0.0",
+        "control_area": "Transport Layer Security",
+        "control": "Expired TLS certificates must not be used.",
+    },
+    "WEB-TLS-005": {
+        "framework": "OWASP ASVS",
+        "version": "5.0.0",
+        "control_area": "Cryptographic Controls",
+        "control": "Weak cryptographic algorithms should not be used.",
+    },
+    "WEB-HEADER-001": {
+        "framework": "OWASP ASVS",
+        "version": "5.0.0",
+        "control_area": "HTTP Security Headers",
+        "control": "Strict-Transport-Security should be configured.",
+    },
+    "WEB-HEADER-002": {
+        "framework": "OWASP ASVS",
+        "version": "5.0.0",
+        "control_area": "HTTP Security Headers",
+        "control": "Content-Security-Policy should be configured.",
+    },
+    "WEB-HEADER-003": {
+        "framework": "OWASP ASVS",
+        "version": "5.0.0",
+        "control_area": "HTTP Security Headers",
+        "control": "Clickjacking protection should be configured.",
+    },
+    "WEB-HEADER-004": {
+        "framework": "OWASP ASVS",
+        "version": "5.0.0",
+        "control_area": "HTTP Security Headers",
+        "control": "MIME-sniffing protection should be configured.",
+    },
+    "WEB-HEADER-005": {
+        "framework": "OWASP ASVS",
+        "version": "5.0.0",
+        "control_area": "HTTP Security Headers",
+        "control": "Referrer information should be controlled.",
+    },
+    "WEB-COOKIE-001": {
+        "framework": "OWASP ASVS",
+        "version": "5.0.0",
+        "control_area": "Session Management",
+        "control": "Sensitive cookies should use HttpOnly.",
+    },
+    "WEB-COOKIE-002": {
+        "framework": "OWASP ASVS",
+        "version": "5.0.0",
+        "control_area": "Session Management",
+        "control": "Sensitive cookies should use Secure.",
+    },
+    "WEB-COOKIE-003": {
+        "framework": "OWASP ASVS",
+        "version": "5.0.0",
+        "control_area": "Session Management",
+        "control": "Cookies should define a SameSite attribute.",
+    },
+}

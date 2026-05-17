@@ -21,7 +21,33 @@ def sort_findings_by_severity(findings: list[Finding]) -> list[Finding]:
         key=lambda finding: SEVERITY_ORDER.get(finding.severity.value, 99),
     )
 
+def _format_compliance_metadata(finding: Finding) -> list[str]:
+    compliance = finding.metadata.get("compliance", {})
 
+    if not compliance:
+        return ["  - N/A"]
+
+    lines = []
+
+    mitre = compliance.get("mitre_attack")
+    if mitre:
+        lines.append(
+            f"  - MITRE ATT&CK: {mitre.get('tactic')} / {mitre.get('technique')}"
+        )
+
+    owasp = compliance.get("owasp_asvs")
+    if owasp:
+        lines.append(
+            f"  - OWASP ASVS {owasp.get('version')}: {owasp.get('control_area')}"
+        )
+
+    nist = compliance.get("nist_csf")
+    if nist:
+        lines.append(
+            f"  - NIST CSF: {nist.get('function')} / {nist.get('category')}"
+        )
+
+    return lines
 def get_priority_findings(findings: list[Finding]) -> list[Finding]:
     return [
         finding
@@ -100,32 +126,34 @@ def generate_markdown_report(target: str, findings: list[Finding]) -> str:
     else:
         for finding in sorted_findings:
             lines.extend(
-                [
-                    f"### {finding.id} - {finding.title}",
-                    "",
-                    f"- **Severity:** {finding.severity.value}",
-                    f"- **Category:** {finding.category}",
-                    f"- **Target:** `{finding.target}`",
-                    f"- **Framework:** {finding.framework or 'N/A'}",
-                    f"- **MITRE tactic:** {finding.mitre_tactic or 'N/A'}",
-                    f"- **MITRE technique:** {finding.mitre_technique or 'N/A'}",
-                    "",
-                    "**Description**",
-                    "",
-                    finding.description,
-                    "",
-                    "**Evidence**",
-                    "",
-                    f"```text\n{finding.evidence}\n```",
-                    "",
-                    "**Recommendation**",
-                    "",
-                    finding.recommendation,
-                    "",
-                    "---",
-                    "",
-                ]
-            )
+    [
+        f"### {finding.id} - {finding.title}",
+        "",
+        f"- **Severity:** {finding.severity.value}",
+        f"- **Category:** {finding.category}",
+        f"- **Target:** `{finding.target}`",
+        f"- **Framework:** {finding.framework or 'N/A'}",
+        f"- **MITRE tactic:** {finding.mitre_tactic or 'N/A'}",
+        f"- **MITRE technique:** {finding.mitre_technique or 'N/A'}",
+        f"- **Compliance mappings:**",
+        *_format_compliance_metadata(finding),
+        "",
+        "**Description**",
+        "",
+        finding.description,
+        "",
+        "**Evidence**",
+        "",
+        f"```text\n{finding.evidence}\n```",
+        "",
+        "**Recommendation**",
+        "",
+        finding.recommendation,
+        "",
+        "---",
+        "",
+    ]
+)
 
     lines.extend(
         [

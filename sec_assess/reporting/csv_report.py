@@ -29,6 +29,7 @@ def generate_csv_rows(target: str, findings: list[Finding]) -> list[dict]:
                 "framework": finding.framework or "",
                 "mitre_tactic": finding.mitre_tactic or "",
                 "mitre_technique": finding.mitre_technique or "",
+                "compliance": str(finding.metadata.get("compliance", {})),
                 "evidence": finding.evidence,
                 "recommendation": finding.recommendation,
             }
@@ -45,7 +46,7 @@ def save_csv_report(target: str, findings: list[Finding], output_dir: str = "rep
     output_path = Path(output_dir) / filename
 
     fieldnames = [
-        "target",
+         "target",
         "scan_date",
         "risk_score",
         "overall_risk",
@@ -56,6 +57,7 @@ def save_csv_report(target: str, findings: list[Finding], output_dir: str = "rep
         "framework",
         "mitre_tactic",
         "mitre_technique",
+        "compliance",
         "evidence",
         "recommendation",
     ]

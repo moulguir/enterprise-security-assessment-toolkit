@@ -13,6 +13,7 @@ from sec_assess.utils.url_utils import normalize_url
 from sec_assess.reporting.csv_report import save_csv_report
 from sec_assess.modules.host_exposure.host_scanner import HostExposureScanner
 from sec_assess.modules.logguard.log_scanner import LogGuardScanner
+from sec_assess.modules.compliance.mapper import enrich_findings_with_compliance
 
 
 console = Console()
@@ -40,6 +41,7 @@ def handle_report_output(
     output_format: str,
     output_dir: str = "reports",
 ) -> None:
+    findings = enrich_findings_with_compliance(findings)
     if output_format == "console":
         print_scan_report(target=target, findings=findings)
         return
